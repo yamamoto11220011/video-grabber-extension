@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=440, initial-scale=1.0">
+  <title>Video Grabber Pro</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect width="24" height="24" rx="6" fill="url(#grad)"/>
+            <path d="M9 7l8 5-8 5V7z" fill="white"/>
+            <defs>
+              <linearGradient id="grad" x1="0" y1="0" x2="24" y2="24">
+                <stop offset="0%" stop-color="#6C5CE7"/>
+                <stop offset="100%" stop-color="#a855f7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="header-text">
+          <h1>Video Grabber Pro</h1>
+          <p class="subtitle" id="pageTitle">読み込み中...</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" id="refreshBtn" title="ページを再スキャン">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+        <button class="btn-icon" id="clearBtn" title="リストをクリア">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Force Detection Section -->
+    <div class="force-detect-section">
+      <div class="section-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <span>動画が見つからない時の強制検出</span>
+      </div>
+      <div class="force-buttons">
+        <button class="btn-force btn-reload-cache" id="reloadCacheBtn" title="キャッシュを破棄して再読み込み（ログイン状態は維持）">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
+          </svg>
+          キャッシュ破棄リロード
+        </button>
+        <button class="btn-force btn-super-reload" id="superReloadBtn" title="Cookieを全削除してリロード（本家VDH機能・※ログアウトされます）">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          Cookie削除＆強制リロード
+        </button>
+      </div>
+    </div>
+
+    <!-- Subheader with count & Download All -->
+    <div class="list-header">
+      <span class="section-heading">検出された動画</span>
+      <button class="btn-download-all" id="downloadAllBtn" title="すべてダウンロード">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>一括ダウンロード</span>
+      </button>
+    </div>
+
+    <!-- Video list -->
+    <div class="video-list" id="videoList">
+      <div class="empty-state" id="emptyState">
+        <div class="empty-icon">
+          <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.35">
+            <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/>
+            <line x1="7" y1="2" x2="7" y2="22"/>
+            <line x1="17" y1="2" x2="17" y2="22"/>
+            <line x1="2" y1="12" x2="22" y2="12"/>
+            <line x1="2" y1="7" x2="7" y2="7"/>
+            <line x1="2" y1="17" x2="7" y2="17"/>
+            <line x1="17" y1="7" x2="22" y2="7"/>
+            <line x1="17" y1="17" x2="22" y2="17"/>
+          </svg>
+        </div>
+        <p class="empty-text">動画が見つかりません</p>
+        <p class="empty-hint">動画を一度「再生」するか、上の「キャッシュ破棄リロード」をお試しください</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="video-count" id="videoCount">0 件の動画を検出</span>
+      <span class="tag-unlimited">MP4 / HLS・無制限</span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
